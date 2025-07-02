@@ -26,7 +26,7 @@ RUN npm run build
 RUN echo "--- Listing content of /app/dist after build: ---" && \
     ls -la /app/dist
 # --- КОНЕЦ ДИАГНОСТИКИ ---
-    
+
 # 2 Запуск приложения
 # Используем Nginx - очень легкий и быстрый веб-сервер
 FROM nginx:stable-alpine
@@ -37,7 +37,7 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Копируем скомпилированные файлы из этапа сборки в папку,
 # которую Nginx использует для раздачи статического контента
-COPY --from=build /app/dist/frontend /usr/share/nginx/html
+COPY --from=build /app/dist/browser /usr/share/nginx/html
 
 # Сообщаем Docker, что контейнер будет слушать порт 3000
 EXPOSE 3000
