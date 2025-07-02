@@ -20,6 +20,13 @@ COPY . .
 # Команда npm run build запустит сборку определенную в package.json
 RUN npm run build
 
+# --- НАЧАЛО ПРАВИЛЬНОЙ ДИАГНОСТИКИ ---
+# Посмотрим, что создала команда `npm run build`
+# Эта команда выполняется на этапе 'build'
+RUN echo "--- Listing content of /app/dist after build: ---" && \
+    ls -la /app/dist
+# --- КОНЕЦ ДИАГНОСТИКИ ---
+    
 # 2 Запуск приложения
 # Используем Nginx - очень легкий и быстрый веб-сервер
 FROM nginx:stable-alpine
@@ -28,21 +35,9 @@ FROM nginx:stable-alpine
 # Мы создадим этот файл на следующем этапе
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# --- НАЧАЛО ДИАГНОСТИЧЕСКОГО БЛОКА ---
-# Давайте посмотрим, что именно лежит в папке со сборкой перед копированием
-RUN echo "--- Listing files in build stage /app/dist/frontend: ---" && \
-    ls -la /app/dist/frontend
-# --- КОНЕЦ ДИАГНОСТИЧЕСКОГО БЛОКА ---
-
 # Копируем скомпилированные файлы из этапа сборки в папку,
 # которую Nginx использует для раздачи статического контента
 COPY --from=build /app/dist/frontend /usr/share/nginx/html
-
-# --- НАЧАЛО ДИАГНОСТИЧЕСКОГО БЛОКА 2 ---
-# А теперь посмотрим, что скопировалось в финальную папку Nginx
-RUN echo "--- Listing files in Nginx root /usr/share/nginx/html: ---" && \
-    ls -la /usr/share/nginx/html
-# --- КОНЕЦ ДИАГНОСТИЧЕСКОГО БЛОКА 2 ---
 
 # Сообщаем Docker, что контейнер будет слушать порт 3000
 EXPOSE 3000
