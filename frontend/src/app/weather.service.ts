@@ -4,7 +4,6 @@ import { environment } from "../environments/environment.prod";
 
 @Injectable()
 export class WeatherService {
-    private urlWeatherForecast = 'weatherforecast/'
     private apiUrl = environment.apiUrl;
     private http = inject(HttpClient);
     public getWeatherForecast() {

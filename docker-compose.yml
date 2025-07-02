@@ -1,13 +1,18 @@
 networks:
   dev-network:
 
+
 services:
 
   nginx:
     image: nginx:stable-alpine
+    container_name: my_nginx_proxy
     ports:
+      # Пробрасываем порт 80 с нашего компьютера на порт 80 в контейнере.
+      # Именно поэтому film.com будет работать без указания порта.
       - "80:80"
     volumes:
+      # Монтируем наш кастомный конфиг Nginx
       - './nginx.conf:/etc/nginx/nginx.conf'
     depends_on:
       - my-backend
@@ -18,14 +23,16 @@ services:
   my-backend:
     build:
       context: ./backend
+    container_name: my_dotnet_backend
     ports:
       - "8080:8080"
     networks:
-    - dev-network
+      - dev-network
 
   my-frontend:
     build:
       context: ./frontend
+    container_name: my_angular_frontend
     ports:
       - "3000:3000"
     networks:

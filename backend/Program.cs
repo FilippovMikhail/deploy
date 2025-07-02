@@ -14,7 +14,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseCors(builder => builder
     .WithOrigins("http://localhost:5201",
-    "https://film-deploy.onrender.com")
+    "https://film.com")
     .AllowAnyHeader()
     .AllowAnyMethod()
     .AllowCredentials());
