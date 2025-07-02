@@ -1,14 +1,15 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
+import { environment } from "../environments/environment.prod";
 
 @Injectable()
 export class WeatherService {
-    private urlPrefix = '/api/';
     private urlWeatherForecast = 'weatherforecast/'
+    private apiUrl = environment.apiUrl;
     private http = inject(HttpClient);
     public getWeatherForecast() {
         // return this.http.get<IWeather[]>(this.urlPrefix + this.urlWeatherForecast);
-        return this.http.get<IWeather[]>('http://localhost:5209/weatherforecast/');
+        return this.http.get<IWeather[]>(`${this.apiUrl}/weatherforecast/`);
     }
 }
 
