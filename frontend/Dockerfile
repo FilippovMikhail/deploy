@@ -11,7 +11,7 @@ COPY package*.json ./
 
 # Устанавливаем зависимости
 # npm ci - быстрее и строже, чем npm install, идеально для CI/CD
-RUN npm ci
+RUN npm install
 
 # Копируем остальной исходный код приложения
 COPY . .
