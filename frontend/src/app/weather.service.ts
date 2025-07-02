@@ -8,7 +8,6 @@ export class WeatherService {
     private apiUrl = environment.apiUrl;
     private http = inject(HttpClient);
     public getWeatherForecast() {
-        // return this.http.get<IWeather[]>('https://film-deploy-back.onrender.com/weatherforecast');
         return this.http.get<IWeather[]>(`${this.apiUrl}/weatherforecast/`);
     }
 }
