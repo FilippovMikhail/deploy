@@ -37,7 +37,7 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Копируем скомпилированные файлы из этапа сборки в папку,
 # которую Nginx использует для раздачи статического контента
-COPY --from=build /app/dist/browser /usr/share/nginx/html
+COPY --from=build /app/dist/frontend/browser /usr/share/nginx/html
 
 # Сообщаем Docker, что контейнер будет слушать порт 3000
 EXPOSE 3000
